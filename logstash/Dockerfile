@@ -1,2 +1,2 @@
 # https://www.docker.elastic.co/
-FROM docker.elastic.co/logstash/logstash:7.8.1
+FROM arm64v8/logstash:7.17.9
