@@ -3,7 +3,7 @@ version: '3.2'
 services:
   elasticsearch:
     build:
-      context: "${PWD}/ddd/"
+      context: "${PWD}/elasticsearch/"
       dockerfile: Dockerfile
     volumes:
       - type: bind
