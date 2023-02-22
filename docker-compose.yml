@@ -1,4 +1,4 @@
-version: '3.2'
+version: "3.2"
 
 services:
   elasticsearch:
@@ -21,25 +21,43 @@ services:
     networks:
       - elk
 
-  logstash:
+  # logstash:
+  #   build:
+  #     context: "${PWD}/logstash/"
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - type: bind
+  #       source: "${PWD}/logstash/config/logstash.yml"
+  #       target: /usr/share/logstash/config/logstash.yml
+  #       read_only: true
+  #     - type: bind
+  #       source: "${PWD}/logstash/pipeline"
+  #       target: /usr/share/logstash/pipeline
+  #       read_only: true
+  #   ports:
+  #     - "5001:5001/tcp"
+  #     - "5001:5001/udp"
+  #     - "9600:9600"
+  #   environment:
+  #     LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+  #   networks:
+  #     - elk
+  #   depends_on:
+  #     - elasticsearch
+
+  fluentd:
     build:
-      context: "${PWD}/logstash/"
+      context: "${PWD}/fluentd/"
       dockerfile: Dockerfile
     volumes:
       - type: bind
-        source: "${PWD}/logstash/config/logstash.yml"
-        target: /usr/share/logstash/config/logstash.yml
-        read_only: true
-      - type: bind
-        source: "${PWD}/logstash/pipeline"
-        target: /usr/share/logstash/pipeline
-        read_only: true
+        source: "${PWD}/fluentd/conf/fluent.conf"
+        target: "/usr/share/fluentd/conf/fluent.conf"
+    links:
+      - "elasticsearch"
     ports:
-      - "5001:5001/tcp"
-      - "5001:5001/udp"
-      - "9600:9600"
-    environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      - "24224:24224/tcp"
+      - "24224:24224/udp"
     networks:
       - elk
     depends_on:
@@ -52,7 +70,7 @@ services:
     volumes:
       - type: bind
         source: "${PWD}/kibana/config/kibana.yml"
-        target: /usr/share/kibana/config/kibana.yml
+        target: "/usr/share/kibana/config/kibana.yml"
         read_only: true
     ports:
       - "5601:5601"

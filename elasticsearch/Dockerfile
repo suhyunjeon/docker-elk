@@ -1,2 +1,2 @@
 # https://www.docker.elastic.co/
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+FROM arm64v8/elasticsearch:7.17.9
