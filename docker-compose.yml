@@ -47,7 +47,7 @@ services:
 
   kibana:
     build:
-      context: kibana/
+      context: "${PWD}/kibana/"
       dockerfile: Dockerfile
     volumes:
       - type: bind
