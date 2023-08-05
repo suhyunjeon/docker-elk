@@ -3,14 +3,14 @@ version: '3.2'
 services:
   elasticsearch:
     build:
-      context: "${PWD}/elasticsearch/"
+      context: "./elasticsearch/"
       dockerfile: Dockerfile
     volumes:
       - type: bind
-        source: "${PWD}/elasticsearch/config/elasticsearch.yml"
+        source: "./elasticsearch/config/elasticsearch.yml"
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
-      - "${PWD}/elasticsearch/data:/var/lib/elasticsearch/data"
+      - "./elasticsearch/data:/var/lib/elasticsearch/data"
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -23,15 +23,15 @@ services:
 
   logstash:
     build:
-      context: "${PWD}/logstash/"
+      context: "./logstash/"
       dockerfile: Dockerfile
     volumes:
       - type: bind
-        source: "${PWD}/logstash/config/logstash.yml"
+        source: "./logstash/config/logstash.yml"
         target: /usr/share/logstash/config/logstash.yml
         read_only: true
       - type: bind
-        source: "${PWD}/logstash/pipeline"
+        source: "./logstash/pipeline"
         target: /usr/share/logstash/pipeline
         read_only: true
     ports:
@@ -47,11 +47,11 @@ services:
 
   kibana:
     build:
-      context: "${PWD}/kibana/"
+      context: "./kibana/"
       dockerfile: Dockerfile
     volumes:
       - type: bind
-        source: "${PWD}/kibana/config/kibana.yml"
+        source: "./kibana/config/kibana.yml"
         target: /usr/share/kibana/config/kibana.yml
         read_only: true
     ports:
